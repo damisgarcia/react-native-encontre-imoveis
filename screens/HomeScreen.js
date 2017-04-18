@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text} from 'react-native';
+import { Text, View } from 'react-native';
 import {
   Container,
   Content,
@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component {
 
     return (
       <Container>
-        <Header style={styles.header}>
+        <Header>
             <Left>
               <Button transparent>
                   <Icon name='arrow-back' />
@@ -41,8 +41,10 @@ export default class HomeScreen extends React.Component {
             </Right>
         </Header>
         <Content>
-          <Text style={styles.counter}>{state.count}</Text>
-          <Text>Hello Word with Redux!</Text>
+          <View style={styles.hero}>
+            <Text style={styles.counter}>{state.count}</Text>
+            <Text>Hello Word with Redux!</Text>
+          </View>
         </Content>
       </Container>
     );
@@ -50,16 +52,13 @@ export default class HomeScreen extends React.Component {
 };
 
 const styles = {
-  header: {
-    marginTop: 24,
-  },
-  content: {
+  hero: {
     flex: 1,
+    paddingTop: 64,
+    paddingBottom: 64,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: "white",
   },
   counter: {
-    fontSize: 48
+    fontSize: 48,
   }
 };

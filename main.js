@@ -7,13 +7,16 @@ import thunk from 'redux-thunk';
 
 
 import * as reducers from './store/reducers';
-const store = createStore(combineReducers(reducers), applyMiddleware(thunk));
+import Store from './constants/Store';
+
+Store.instance = createStore(combineReducers(reducers), applyMiddleware(thunk));
 
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 
 import Application from './containers/Application';
 
-import { StyleProvider } from 'native-base';
+import { StyleProvider, getTheme } from 'native-base';
+import Colors from './themes/Colors';
 import DefaultTheme from './themes/DefaultTheme';
 
 class App extends React.Component {
@@ -30,10 +33,10 @@ class App extends React.Component {
     try {
       await cacheAssetsAsync({
         fonts: [
-          { 'Roboto_thin': require('./assets/fonts/Roboto-Thin.ttf') },
+          { 'Roboto_thin':    require('./assets/fonts/Roboto-Thin.ttf') },
           { 'Roboto_regular': require('./assets/fonts/Roboto-Regular.ttf') },
-          { 'Roboto_medium': require('./assets/fonts/Roboto-Medium.ttf') },
-          { 'Roboto_bold': require('./assets/fonts/Roboto-Bold.ttf') },
+          { 'Roboto_medium':  require('./assets/fonts/Roboto-Medium.ttf') },
+          { 'Roboto_bold':    require('./assets/fonts/Roboto-Bold.ttf') },
         ],
       });
     } catch (e) {
@@ -50,13 +53,17 @@ class App extends React.Component {
   render() {
     if (this.state.appIsReady) {
       return (
-        <Provider store={store}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            {Platform.OS === 'android' && <StatusBar backgroundColor="blue" barStyle="light-content"/> }
-            <Application />
-          </View>
-        </Provider>
+        <StyleProvider style={getTheme(DefaultTheme)}>
+          <Provider store={Store.instance}>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              {Platform.OS === 'android' && <StatusBar backgroundColor="blue" barStyle="light-content"/> }
+              <View style={styles.content}>
+                <Application />
+              </View>
+            </View>
+          </Provider>
+        </StyleProvider>
       );
     }
     else{
@@ -69,6 +76,12 @@ Expo.registerRootComponent(App);
 
 const styles = {
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: Colors.brandPrimary,
+  },
+  content: {
+    flex: 1,
+    backgroundColor: 'white',
+    marginTop: 24,
   }
 }
