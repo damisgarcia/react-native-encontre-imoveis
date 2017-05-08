@@ -1,6 +1,7 @@
 import color from 'color';
 
 import { Platform, Dimensions, PixelRatio } from 'react-native';
+import Colors from './Colors';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -112,12 +113,12 @@ export default {
 
 
       // Color
-  brandPrimary: '#009688',
-  brandInfo: '#62B1F6',
-  brandSuccess: '#5cb85c',
-  brandDanger: '#d9534f',
-  brandWarning: '#f0ad4e',
-  brandSidebar: '#252932',
+  brandPrimary: Colors.brandPrimary,
+  brandInfo:    Colors.brandInfo,
+  brandSuccess: Colors.brandSuccess,
+  brandDanger:  Colors.brandDanger,
+  brandWarning: Colors.brandWarning,
+  brandSidebar: Colors.brandSidebar,
 
 
     // Font

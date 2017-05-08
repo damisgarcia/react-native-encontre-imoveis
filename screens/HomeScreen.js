@@ -4,19 +4,18 @@ import NavigationStyle from '../constants/NavigationStyle';
 import {
   Container,
   Content,
-  Header,
-  Title,
-  Left,
-  Right,
   Body,
   Button,
-  Icon
+  Icon,
+  Item,
+  Input,
 } from 'native-base';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = { ...NavigationStyle,  title: "Blank Template" };
+  static navigationOptions = { ...NavigationStyle,  title: "Encontre Imoveis" };
 
   state = {
+    textSearch: '',
     count: 0
   }
 
@@ -29,11 +28,16 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container style={styles.container}>
         <Content>
-          <View style={styles.hero}>
-            <Text style={styles.counter}>{this.state.count}</Text>
-            <Text>Hello Word with React Native!</Text>
+          <View style={styles.content}>
+            <Item underline>
+              <Input placeholder="Bairro, Cidade" value={this.state.textSearch} onChangeText={ (textSearch)=> this.setState({textSearch})} />
+            </Item>
+            <Button style={styles.button} primary block>
+              <Text style={styles.textButton}>Pesquisar Imóvel</Text>
+            </Button>
+            <Text>{this.state.textSearch}</Text>
           </View>
         </Content>
       </Container>
@@ -42,13 +46,19 @@ export default class HomeScreen extends React.Component {
 };
 
 const styles = {
-  hero: {
-    flex: 1,
-    paddingTop: 64,
-    paddingBottom: 64,
-    alignItems: 'center',
+  container: {
+    backgroundColor: 'white',
   },
-  counter: {
-    fontSize: 48,
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 16,
+  },
+  button: {
+    marginTop: 24,
+    marginBottom: 24
+  },
+  textButton: {
+    color: 'white',
   }
 };
