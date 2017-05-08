@@ -1,11 +1,6 @@
 import React from 'react';
-
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import * as ApplicationActions from '../actions/ApplicationActions';
-
 import { Text, View } from 'react-native';
+import NavigationStyle from '../constants/NavigationStyle';
 import {
   Container,
   Content,
@@ -19,22 +14,26 @@ import {
 } from 'native-base';
 
 export default class HomeScreen extends React.Component {
+  static navigationOptions = { ...NavigationStyle,  title: "Blank Template" };
+
+  state = {
+    count: 0
+  }
+
   componentDidMount() {
     setInterval(
-      ()=> this.props.actions.incremment(),
+      ()=> this.setState({count: this.state.count + 1}),
       1000
     )
   }
 
   render() {
-    let { state } = this.props
-
     return (
       <Container>
         <Content>
           <View style={styles.hero}>
-            <Text style={styles.counter}>{state.count}</Text>
-            <Text>Hello Word with Redux!</Text>
+            <Text style={styles.counter}>{this.state.count}</Text>
+            <Text>Hello Word with React Native!</Text>
           </View>
         </Content>
       </Container>

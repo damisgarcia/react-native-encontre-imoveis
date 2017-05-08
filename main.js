@@ -2,14 +2,6 @@ import Expo from 'expo';
 import React from 'react';
 import { View, Platform, StatusBar } from 'react-native';
 
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-
-import * as reducers from './store/reducers';
-import Store from './constants/Store';
-
-Store.instance = createStore(combineReducers(reducers), applyMiddleware(thunk));
 // configure assets
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 // import router
@@ -54,15 +46,13 @@ class App extends React.Component {
     if (this.state.appIsReady) {
       return (
         <StyleProvider style={getTheme(DefaultTheme)}>
-          <Provider store={Store.instance}>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              {Platform.OS === 'android' && <StatusBar backgroundColor="blue" barStyle="light-content"/> }
-              <View style={styles.content}>
-                <RootNavigation/>
-              </View>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {Platform.OS === 'android' && <StatusBar backgroundColor="blue" barStyle="light-content"/> }
+            <View style={styles.content}>
+              <RootNavigation/>
             </View>
-          </Provider>
+          </View>
         </StyleProvider>
       );
     }
