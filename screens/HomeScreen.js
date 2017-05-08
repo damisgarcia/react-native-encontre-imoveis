@@ -1,4 +1,10 @@
 import React from 'react';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as ApplicationActions from '../actions/ApplicationActions';
+
 import { Text, View } from 'react-native';
 import {
   Container,
@@ -25,21 +31,6 @@ export default class HomeScreen extends React.Component {
 
     return (
       <Container>
-        <Header>
-            <Left>
-              <Button transparent>
-                  <Icon name='arrow-back' />
-              </Button>
-            </Left>
-            <Body>
-                <Title>Blank Template</Title>
-            </Body>
-            <Right>
-                <Button transparent>
-                    <Icon name='menu' />
-                </Button>
-            </Right>
-        </Header>
         <Content>
           <View style={styles.hero}>
             <Text style={styles.counter}>{state.count}</Text>

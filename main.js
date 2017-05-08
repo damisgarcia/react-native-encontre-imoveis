@@ -1,19 +1,19 @@
 import Expo from 'expo';
 import React from 'react';
 import { View, Platform, StatusBar } from 'react-native';
+
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-
 
 import * as reducers from './store/reducers';
 import Store from './constants/Store';
 
 Store.instance = createStore(combineReducers(reducers), applyMiddleware(thunk));
-
+// configure assets
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
-
-import Application from './containers/Application';
+// import router
+import RootNavigation from './screens/RootNavigation';
 
 import { StyleProvider, getTheme } from 'native-base';
 import Colors from './themes/Colors';
@@ -59,7 +59,7 @@ class App extends React.Component {
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
               {Platform.OS === 'android' && <StatusBar backgroundColor="blue" barStyle="light-content"/> }
               <View style={styles.content}>
-                <Application />
+                <RootNavigation/>
               </View>
             </View>
           </Provider>
@@ -81,7 +81,7 @@ const styles = {
   },
   content: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: Colors.brandPrimary,
     marginTop: 24,
   }
 }
