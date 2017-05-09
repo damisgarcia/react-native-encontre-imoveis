@@ -11,12 +11,19 @@ import {
   Input,
 } from 'native-base';
 
+import Nestoria from '../services/Nestoria';
+
 export default class PlacesScreen extends React.Component {
   static navigationOptions = { ...NavigationStyle,  title: "Resultado Pesquisa" };
 
   state = {
     textSearch: '',
     count: 0
+  }
+
+  componentDidMount(){
+    const { state } = this.props.navigation;
+    Nestoria.searchByPlaceName(state.params.textSearch, this._onGetPlaces, this._onGetPlacesFail);
   }
 
   render() {
@@ -32,7 +39,15 @@ export default class PlacesScreen extends React.Component {
       </Container>
     );
   }
+  _onGetPlaces(response){
+    console.log(response)
+  }
+
+  _onGetPlacesFail(err){
+    console.log(err)
+  }
 };
+
 
 const styles = {
   container: {
