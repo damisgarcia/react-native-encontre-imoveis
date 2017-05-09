@@ -8,6 +8,7 @@ import {
   Row,
   Button,
   Icon,
+  Toast
 } from 'native-base';
 
 import Nestoria from '../services/Nestoria';
@@ -21,7 +22,6 @@ export default class PlaceScreen extends React.Component {
   render() {
     const { state } = this.props.navigation;
     const { place } = state.params
-    console.log(place.latitude, place.longitude)
     return (
       <Container style={styles.container}>
         <View style={styles.pictureContainer}>
@@ -48,7 +48,12 @@ export default class PlaceScreen extends React.Component {
 };
 
 const onLinkFail = (err)=>{
-  console.error('An error occurred', err);
+  Toast.show({
+    supportedOrientations: ['potrait','landscape'],
+    text: 'Error enquanto carregava informação!',
+    position: 'bottom',
+    buttonText: 'Okay'
+  });
 }
 
 const styles = {

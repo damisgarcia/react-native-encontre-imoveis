@@ -12,6 +12,7 @@ import {
   Thumbnail,
   List,
   ListItem,
+  Toast
 } from 'native-base';
 
 import Nestoria from '../services/Nestoria';
@@ -60,7 +61,11 @@ export default class PlacesScreen extends React.Component {
   }
 
   _onGetPlacesFail(err){
-    console.log(err)
+    Toast.show({
+      text: 'Falha na conexão, tente novamente!',
+      position: 'bottom',
+      buttonText: 'Okay'
+    });
   }
 };
 
