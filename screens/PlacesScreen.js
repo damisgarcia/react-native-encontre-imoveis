@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { ActivityIndicator, Text, View, ListView } from 'react-native';
 import NavigationStyle from '../constants/NavigationStyle';
 import {
   Container,
@@ -17,30 +17,37 @@ export default class PlacesScreen extends React.Component {
   static navigationOptions = { ...NavigationStyle,  title: "Resultado Pesquisa" };
 
   state = {
-    textSearch: '',
-    count: 0
+    places: [],
+    loading: true
   }
 
   componentDidMount(){
     const { state } = this.props.navigation;
-    Nestoria.searchByPlaceName(state.params.textSearch, this._onGetPlaces, this._onGetPlacesFail);
+    Nestoria.searchByPlaceName(state.params.textSearch, (r)=> this._onGetPlaces(r), (err)=> this._onGetPlacesFail(err));
   }
 
   render() {
-    const { state } = this.props.navigation;
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     return (
       <Container style={styles.container}>
         <Content>
           <View style={styles.content}>
-            <Text>Resultado Pesquisa Screen</Text>
-            <Text>{state.params.textSearch}</Text>
+            <ActivityIndicator
+              animating={this.state.loading}
+              style={{ height: (this.state.loading ? 80 : 0) }}
+              size="large" />
+
+            <ListView
+              enableEmptySections={true}
+              dataSource={ds.cloneWithRows(this.state.places)}
+              renderRow={(rowData) => <Text>{rowData.title}</Text>}/>
           </View>
         </Content>
       </Container>
     );
   }
   _onGetPlaces(response){
-    console.log(response)
+    this.setState({places: response.data.response.listings, loading: false})
   }
 
   _onGetPlacesFail(err){
