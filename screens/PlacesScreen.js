@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Text, View, ListView } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import NavigationStyle from '../constants/NavigationStyle';
 import {
   Container,
@@ -9,6 +9,9 @@ import {
   Icon,
   Item,
   Input,
+  Thumbnail,
+  List,
+  ListItem,
 } from 'native-base';
 
 import Nestoria from '../services/Nestoria';
@@ -27,7 +30,6 @@ export default class PlacesScreen extends React.Component {
   }
 
   render() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     return (
       <Container style={styles.container}>
         <Content>
@@ -37,10 +39,16 @@ export default class PlacesScreen extends React.Component {
               style={{ height: (this.state.loading ? 80 : 0) }}
               size="large" />
 
-            <ListView
-              enableEmptySections={true}
-              dataSource={ds.cloneWithRows(this.state.places)}
-              renderRow={(rowData) => <Text>{rowData.title}</Text>}/>
+            <List dataArray={this.state.places}
+              renderRow={(item) =>
+                <ListItem>
+                  <Thumbnail style={styles.thumb} square size={80} source={{uri: item.thumb_url}} />
+                  <Body>
+                    <Text>{item.title}</Text>
+                    <Text note>{item.datasource_name}</Text>
+                  </Body>
+                </ListItem>
+              }></List>
           </View>
         </Content>
       </Container>
@@ -62,14 +70,12 @@ const styles = {
   },
   content: {
     flex: 1,
-    alignItems: 'center',
-    padding: 16,
   },
   button: {
     marginTop: 24,
     marginBottom: 24
   },
-  textButton: {
-    color: 'white',
+  thumb: {
+    marginRight: 8
   }
 };
