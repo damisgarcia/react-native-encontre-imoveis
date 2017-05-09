@@ -30,6 +30,7 @@ export default class PlacesScreen extends React.Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <Container style={styles.container}>
         <Content>
@@ -41,7 +42,7 @@ export default class PlacesScreen extends React.Component {
 
             <List dataArray={this.state.places}
               renderRow={(item) =>
-                <ListItem>
+                <ListItem button onPress={ ()=> navigate('Place', { place: item }) }>
                   <Thumbnail style={styles.thumb} square size={80} source={{uri: item.thumb_url}} />
                   <Body>
                     <Text>{item.title}</Text>
