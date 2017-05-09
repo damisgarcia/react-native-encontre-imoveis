@@ -15,8 +15,7 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = { ...NavigationStyle,  title: "Encontre Imoveis" };
 
   state = {
-    textSearch: '',
-    count: 0
+    textSearch: ''
   }
 
   componentDidMount() {
@@ -27,17 +26,17 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <Container style={styles.container}>
         <Content>
           <View style={styles.content}>
             <Item underline>
-              <Input placeholder="Bairro, Cidade" value={this.state.textSearch} onChangeText={ (textSearch)=> this.setState({textSearch})} />
+              <Input placeholder="Bairro, Cidade" value={this.state.textSearch} onChangeText={ (textSearch)=> this.setState({textSearch}) } />
             </Item>
-            <Button style={styles.button} primary block>
+            <Button style={styles.button} onPress={ ()=> navigate('Places', { textSearch: this.state.textSearch }) } primary block>
               <Text style={styles.textButton}>Pesquisar Imóvel</Text>
             </Button>
-            <Text>{this.state.textSearch}</Text>
           </View>
         </Content>
       </Container>
